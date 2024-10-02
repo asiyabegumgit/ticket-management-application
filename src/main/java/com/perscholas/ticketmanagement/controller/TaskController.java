@@ -84,20 +84,14 @@ public class TaskController {
     @PostMapping("/update-status")
     public String updateTaskStatus(@RequestParam Long taskId, @RequestParam String status) {
         Employee employee = getAuthenticatedEmployee();
+        taskService.updateTaskStatus(taskId,status);
 
-        Optional<Task> optionalTask = taskService.getTaskById(taskId);
-        if(optionalTask.isPresent()) {
-            Task task = optionalTask.get();
-            if (task.getEmployee().getId().equals(employee.getId())) {
-                taskService.updateTaskStatus(taskId, status);
-            }
-        }
         return "redirect:/tasks/employee";
     }
 
     public Employee getAuthenticatedEmployee()
     {
-        return employeeService.getEmployeeById(1L).get();
+        return employeeService.getEmployeeById(2L).get();
     }
 }
 

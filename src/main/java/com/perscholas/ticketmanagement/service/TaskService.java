@@ -31,22 +31,22 @@ public class TaskService {
   }
    public List<Task> getTasksByEmployee(Employee employee)
    {
-       System.out.println(employee.getId());
+      // System.out.println("--->"+employee);
 
-       List<Task> tasks= taskRepository.findByEmployeeId(employee.getId());
-       System.out.println(tasks);
-       return tasks;
+
+    //   System.out.println(tasks);
+       return employee.getTasks();
    }
     public void deleteTask(Long id)
     {
         taskRepository.deleteById(id);
     }
-    public Task updateTaskStatus(Long taskId, String status)
+    public Optional<Task> updateTaskStatus(Long taskId, String status)
     {
         return taskRepository.findById(taskId)
                 .map(task->{
                     task.setStatus(status);
                     return taskRepository.save(task);
-                }).orElseThrow(()->new RuntimeException("task not found"));
+                });
     }
 }
